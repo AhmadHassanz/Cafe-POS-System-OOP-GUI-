@@ -4,6 +4,8 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
@@ -26,18 +28,20 @@ public class StaffDashboard {
 
         Label menuTitle = new Label("Menu:");
         menuListBox = new VBox(5);
+        menuListBox.setMinHeight(200);
         refreshMenu();
 
         ScrollPane menuScrollPane = new ScrollPane(menuListBox);
-        menuScrollPane.setPrefHeight(150);
+        menuScrollPane.setPrefHeight(200);
         menuScrollPane.setFitToWidth(true);
 
         Label cartTitle = new Label("Cart:");
         cartListBox = new VBox(5);
+        cartListBox.setMinHeight(200);
         refreshCart();
 
         ScrollPane cartScrollPane = new ScrollPane(cartListBox);
-        cartScrollPane.setPrefHeight(150);
+        cartScrollPane.setPrefHeight(350);
         cartScrollPane.setFitToWidth(true);
 
         // Input fields for Add to Cart
@@ -87,9 +91,107 @@ public class StaffDashboard {
                 new Label("Add to Cart:"), addInputBox, buttonBox1,
                 new Label("Update Cart (by Item ID):"), updateInputBox, buttonBox2,
                 cartTitle, cartScrollPane, doneBtn, messageLabel, logoutBtn);
-
         layout.setAlignment(Pos.CENTER);
         layout.setPadding(new Insets(20));
+        layout.setMaxWidth(700);
+        layout.setMaxHeight(800);
+        layout.setStyle("""
+                -fx-background-color: rgba(90,140,120,0.85);
+                -fx-background-radius: 20;
+                -fx-border-color: rgba(90,140,120,0.4);
+                -fx-border-radius: 20;
+                -fx-border-width: 10;
+                """);
+        menuScrollPane.setStyle("""
+                -fx-background-color: transparent;
+                -fx-background:transparent;
+                """);
+//        menuListBox.setStyle("""
+//                -fx-font-family: 'Times New Roman';
+//                -fx-font-size: 14px;
+//                -fx-text-fill: white;
+//                -fx-font-weight: bold;
+//                -fx-background-radius: 20;
+//                -fx-border-radius: 20;
+//                -fx-border-width: 10;
+//                """);
+        cartScrollPane.setStyle("""
+                -fx-background-color: transparent;
+                -fx-background:transparent;
+                """);
+        cartListBox.setStyle("""
+                -fx-font-family:'Times New Roman';
+                -fx-font-size: 16px;
+                -fx-text-fill: white;
+                -fx-font-weight: bold;
+                -fx-background-radius: 20;
+                -fx-border-radius: 20;
+                -fx-border-width: 10;
+              
+                """);
+        addToCartBtn.setStyle("""
+                -fx-background-color: white;
+                -fx-text-fill: rgb(90,140,120);
+                -fx-font-weight: bold;
+                -fx-font-size: 14px;        
+                -fx-font-family: 'Times New Roman';
+                """);
+        deleteCartBtn.setStyle("""
+                -fx-background-color: white;
+                -fx-text-fill: rgb(90,140,120);
+                -fx-font-weight: bold;
+                -fx-font-size: 14px;        
+                -fx-font-family: 'Times New Roman';
+                """);
+        updateCartBtn.setStyle("""
+                -fx-background-color: white;
+                -fx-text-fill: rgb(90,140,120);
+                -fx-font-weight: bold;
+                -fx-font-size: 14px;        
+                -fx-font-family: 'Times New Roman';
+                """);
+        logoutBtn.setStyle("""
+                -fx-background-color: white;
+                -fx-text-fill: rgb(90,140,120);
+                -fx-font-weight: bold;
+                -fx-font-size: 14px;        
+                -fx-font-family: 'Times New Roman';
+                """);
+        welcomeLabel.setStyle("""
+                -fx-background-color: transparent;
+                -fx-text-fill: white;
+                -fx-font-weight: bold;
+                -fx-font-size: 16px;        
+                -fx-font-family: 'Times New Roman';
+                """);
+        cartTitle.setStyle("""
+                -fx-background-color: transparent;
+                -fx-text-fill: white;
+                -fx-font-weight: bold;
+                -fx-font-size: 14px;        
+                -fx-font-family: 'Times New Roman';
+                """);
+        menuTitle.setStyle("""
+                -fx-background-color: transparent;
+                -fx-text-fill: white;
+                -fx-font-weight: bold;
+                -fx-font-size: 14px;        
+                -fx-font-family: 'Times New Roman';
+                """);
+        title.setStyle("""
+                -fx-text-fill: white;
+                -fx-font-weight: bold;
+                -fx-font-size: 20px;        
+                -fx-font-family: 'Times New Roman';
+                """);
+        doneBtn.setStyle("""
+                -fx-background-color: white;
+                -fx-text-fill: rgb(90,140,120);
+                -fx-font-weight: bold;
+                -fx-font-size: 14px;        
+                -fx-font-family: 'Times New Roman';
+                """);
+
 
         addToCartBtn.setOnAction(e -> {
             String itemName = itemNameField.getText().trim();
@@ -206,8 +308,15 @@ public class StaffDashboard {
             LoginScreen loginScreen = new LoginScreen(management);
             loginScreen.show(primaryStage);
         });
+        Image image = new Image("File:D:\\OOP code\\IDE code\\Zoro Cafe\\src\\main\\resources\\com\\example\\zorocafe\\projectBackground.png");
+        ImageView bgImage = new ImageView(image);
+        bgImage.setPreserveRatio(false);
 
-        Scene scene = new Scene(layout, 700, 700);
+        StackPane root = new StackPane();
+        bgImage.fitHeightProperty().bind(root.heightProperty());
+        bgImage.fitWidthProperty().bind(root.widthProperty());
+        root.getChildren().addAll(bgImage,layout);
+        Scene scene = new Scene(root, 900, 900);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Zoro's Cafe - Staff Dashboard");
         primaryStage.show();
@@ -229,6 +338,15 @@ public class StaffDashboard {
                     " | Price: PKR " + String.format("%.2f", item.getPrice()) +
                     " | Category: " + item.getCategory());
             menuListBox.getChildren().add(itemInfo);
+
+            itemInfo.setWrapText(true);
+            itemInfo.setMaxWidth(Double.MAX_VALUE);
+            itemInfo.setStyle("""
+                    -fx-text-fill: white;
+                    -fx-font-family: 'Times New Roman';
+                    -fx-font-size: 14px;
+                    -fx-font-weight: bold;
+                    """);
         }
     }
 

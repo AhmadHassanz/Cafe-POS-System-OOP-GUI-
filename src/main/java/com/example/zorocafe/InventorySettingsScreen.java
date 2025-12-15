@@ -4,6 +4,8 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
@@ -39,7 +41,7 @@ public class InventorySettingsScreen {
 
         ComboBox<String> categoryBox = new ComboBox<>();
         categoryBox.getItems().addAll("DRINK", "FOOD");
-        categoryBox.setPromptText("Select Category");
+        categoryBox.setPromptText("Category");
         categoryBox.setMaxWidth(150);
 
         HBox inputBox = new HBox(10, nameField, priceField, categoryBox);
@@ -86,6 +88,95 @@ public class InventorySettingsScreen {
                 buttonBox1, buttonBox2, messageLabel, backButton);
         layout.setAlignment(Pos.CENTER);
         layout.setPadding(new Insets(20));
+        layout.setMaxHeight(500);
+        layout.setMaxWidth(500);
+        layout.setStyle("""
+                -fx-background-color: rgba(90,140,120,0.85);
+                -fx-background-radius: 20;
+                -fx-border-color: rgba(90,140,120,0.4);
+                -fx-border-radius: 20;
+                -fx-border-width: 10;
+                """);
+        scrollPane.setStyle("""
+                -fx-background-color: transparent;
+                -fx-background:transparent;
+                """);
+        itemListBox.setStyle("""
+                -fx-font-family: Chiller;
+                -fx-font-size: 20px;
+                -fx-text-fill: white;
+                -fx-font-weight: bold;
+                -fx-background-radius: 20;
+                -fx-border-radius: 20;
+                -fx-border-width: 10;
+              
+                """);
+        addButton.setStyle("""
+                -fx-background-color: white;
+                -fx-text-fill: rgb(90,140,120);
+                -fx-font-weight: bold;
+                -fx-font-size: 14px;        
+                -fx-font-family: 'Times New Roman';
+                """);
+        deleteButton.setStyle("""
+                -fx-background-color: white;
+                -fx-text-fill: rgb(90,140,120);
+                -fx-font-weight: bold;
+                -fx-font-size: 14px;        
+                -fx-font-family: 'Times New Roman';
+                """);
+        updateButton.setStyle("""
+                -fx-background-color: white;
+                -fx-text-fill: rgb(90,140,120);
+                -fx-font-weight: bold;
+                -fx-font-size: 14px;        
+                -fx-font-family: 'Times New Roman';
+                """);
+        backButton.setStyle("""
+                -fx-background-color: white;
+                -fx-text-fill: rgb(90,140,120);
+                -fx-font-weight: bold;
+                -fx-font-size: 14px;        
+                -fx-font-family: 'Times New Roman';
+                """);
+        displayButton.setStyle("""
+                -fx-background-color: white;
+                -fx-text-fill: rgb(90,140,120);
+                -fx-font-weight: bold;
+                -fx-font-size: 14px;        
+                -fx-font-family: 'Times New Roman';
+                """);
+        categoryBox.setStyle("""
+                -fx-background-color: white;
+                -fx-text-fill: rgb(90,140,120,0.85);
+                -fx-font-weight: bold;
+                -fx-font-size: 14px;        
+                -fx-font-family: 'Times New Roman';
+                """);
+        title.setStyle("""
+                -fx-text-fill: white;
+                -fx-font-weight: bold;
+                -fx-font-size: 20px;        
+                -fx-font-family: 'Times New Roman';
+                """);
+        displayLabel.setStyle("""
+                -fx-text-fill: white;
+                -fx-font-weight: bold;
+                -fx-font-size: 20px;        
+                -fx-font-family: 'Times New Roman';
+                """);
+        addLabel.setStyle("""
+                -fx-text-fill: white;
+                -fx-font-weight: bold;
+                -fx-font-size: 16px;        
+                -fx-font-family: 'Times New Roman';
+                """);
+        updateLabel.setStyle("""
+                -fx-text-fill: white;
+                -fx-font-weight: bold;
+                -fx-font-size: 16px;        
+                -fx-font-family: 'Times New Roman';
+                """);
 
         addButton.setOnAction(e -> {
             String name = nameField.getText().trim();
@@ -177,8 +268,15 @@ public class InventorySettingsScreen {
                     management.printAllUser()[0]);
             adminDashboard.show(primaryStage);
         });
+        Image image = new Image("File:D:\\OOP code\\IDE code\\Zoro Cafe\\src\\main\\resources\\com\\example\\zorocafe\\projectBackground.png");
+        ImageView bgImage = new ImageView(image);
+        bgImage.setPreserveRatio(false);
 
-        Scene scene = new Scene(layout, 700, 650);
+        StackPane root = new StackPane();
+        bgImage.fitHeightProperty().bind(root.heightProperty());
+        bgImage.fitWidthProperty().bind(root.widthProperty());
+        root.getChildren().addAll(bgImage,layout);
+        Scene scene = new Scene(root, 700, 650);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Zoro's Cafe - Inventory Settings");
         primaryStage.show();

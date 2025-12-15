@@ -4,6 +4,8 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
@@ -67,6 +69,84 @@ public class UserSettingsScreen {
                 buttonBox1, buttonBox2, messageLabel, backButton);
         layout.setAlignment(Pos.CENTER);
         layout.setPadding(new Insets(20));
+        layout.setMaxWidth(500);
+        layout.setMaxHeight(500);
+
+        layout.setStyle("""
+                -fx-background-color: rgba(90,140,120,0.85);
+                -fx-background-radius: 20;
+                -fx-border-color: rgba(90,140,120,0.4);
+                -fx-border-radius: 20;
+                -fx-border-width: 10;
+                """);
+        scrollPane.setStyle("""
+                -fx-background-color: transparent;
+                -fx-background:transparent;
+                """);
+        userListBox.setStyle("""
+                -fx-font-family: Chiller;
+                -fx-font-size: 24px;
+                -fx-text-fill: white;
+                -fx-font-weight: bold;
+                -fx-background-radius: 20;
+                -fx-border-radius: 20;
+                -fx-border-width: 10;
+              
+                """);
+        addButton.setStyle("""
+                -fx-background-color: white;
+                -fx-text-fill: rgb(90,140,120);
+                -fx-font-weight: bold;
+                -fx-font-size: 14px;        
+                -fx-font-family: 'Times New Roman';
+                """);
+        deleteButton.setStyle("""
+                -fx-background-color: white;
+                -fx-text-fill: rgb(90,140,120);
+                -fx-font-weight: bold;
+                -fx-font-size: 14px;        
+                -fx-font-family: 'Times New Roman';
+                """);
+        updateButton.setStyle("""
+                -fx-background-color: white;
+                -fx-text-fill: rgb(90,140,120);
+                -fx-font-weight: bold;
+                -fx-font-size: 14px;        
+                -fx-font-family: 'Times New Roman';
+                """);
+        backButton.setStyle("""
+                -fx-background-color: white;
+                -fx-text-fill: rgb(90,140,120);
+                -fx-font-weight: bold;
+                -fx-font-size: 14px;        
+                -fx-font-family: 'Times New Roman';
+                """);
+        displayButton.setStyle("""
+                -fx-background-color: white;
+                -fx-text-fill: rgb(90,140,120);
+                -fx-font-weight: bold;
+                -fx-font-size: 14px;        
+                -fx-font-family: 'Times New Roman';
+                """);
+        roleBox.setStyle("""
+                -fx-background-color: white;
+                -fx-text-fill: rgb(90,140,120,0.85);
+                -fx-font-weight: bold;
+                -fx-font-size: 14px;        
+                -fx-font-family: 'Times New Roman';
+                """);
+        displayLabel.setStyle("""
+                -fx-text-fill: white;
+                -fx-font-weight: bold;
+                -fx-font-size: 20px;        
+                -fx-font-family: 'Times New Roman';
+                """);
+        title.setStyle("""
+                -fx-text-fill: white;
+                -fx-font-weight: bold;
+                -fx-font-size: 20px;        
+                -fx-font-family: 'Times New Roman';
+                """);
 
         addButton.setOnAction(e -> {
             String username = usernameField.getText().trim();
@@ -156,7 +236,16 @@ public class UserSettingsScreen {
             adminDashboard.show(primaryStage);
         });
 
-        Scene scene = new Scene(layout, 650, 600);
+        Image image = new Image("File:D:\\OOP code\\IDE code\\Zoro Cafe\\src\\main\\resources\\com\\example\\zorocafe\\projectBackground.png");
+        ImageView bgImage = new ImageView(image);
+        bgImage.setPreserveRatio(false);
+
+        StackPane root = new StackPane();
+        bgImage.fitHeightProperty().bind(root.heightProperty());
+        bgImage.fitWidthProperty().bind(root.widthProperty());
+        root.getChildren().addAll(bgImage,layout);
+
+        Scene scene = new Scene(root, 650, 600);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Zoro's Cafe - User Settings");
         primaryStage.show();
